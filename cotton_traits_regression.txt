@@ -1,0 +1,16 @@
+ods html file='C:\Users\Jaskaran Dhiman\Desktop\CTR.htm';  
+proc import 
+out=work.jas 
+datafile='C:\Users\Jaskaran Dhiman\Desktop\CTR.xlsx'
+dbms=xlsx
+replace; 
+sheet="Sheet3"; 
+getnames=YES;  
+range="A1:H61";  
+run;
+proc print data =work.jas;
+run;
+proc reg data=work.jas;
+model BW=LA LP SPAD RWC NSB SI SV / selection=stepwise vif p;
+run;
+ods html close;

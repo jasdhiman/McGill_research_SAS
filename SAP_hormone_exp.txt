@@ -1,0 +1,54 @@
+/*******************************
+* Author: Jaskaran Dhiman      *
+* Research Work SAP-hormone exp*
+* Oct 12, 2014                 *
+********************************/
+
+%MACRO anova;
+ods listing close;
+proc import datafile='C:\Users\JAS\Desktop\SAPhormoneII.xls'
+out=&outdata
+replace;
+range="A1:G7";
+run;
+ods pdf file = &outfile;
+proc anova data=&outdata;
+class solution;
+model &prop=solution;
+means solution/tukey;
+run;
+ods pdf close;
+ods listing;
+%MEND anova;
+
+%LET outdata=work.fgh;
+%LET outfile='C:\Users\JAS\Desktop\E2_5.pdf';
+%LET prop=E2_5;
+%anova
+
+%LET outdata=work.efg;
+%LET outfile='C:\Users\JAS\Desktop\E2_1.pdf';
+%LET prop=E2_1;
+%anova
+
+%LET outdata=work.def;
+%LET outfile='C:\Users\JAS\Desktop\E2_05.pdf';
+%LET prop=E2_05;
+%anova
+
+%LET outdata=work.cde;
+%LET outfile='C:\Users\JAS\Desktop\E1_5.pdf';
+%LET prop=E1_5;
+%anova
+
+%LET outdata=work.bcd;
+%LET outfile='C:\Users\JAS\Desktop\E1_1.pdf';
+%LET prop=E1_1;
+%anova
+
+%LET outdata=work.abc;
+%LET outfile='C:\Users\JAS\Desktop\E1_05.pdf';
+%LET prop=E1_05;
+%anova
+
+

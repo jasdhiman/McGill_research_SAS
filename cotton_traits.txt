@@ -1,0 +1,97 @@
+ods html file='C:\Users\Jaskaran Dhiman\Desktop\COTTON_TRAITS_OUTPUT.htm'; 
+proc import out=jas datafile='C:\Users\Jaskaran Dhiman\Desktop\COTTON_TRAITS.xlsx'
+dbms=xlsx
+replace;
+sheet="COTTON_TRAITS";
+getnames=YES; 
+range="A1:N61"; 
+run;
+proc corr data=jas; 
+var LEAF_AREA LEAF_POSITION SPAD FRESH_WEIGHT TURGID_WEIGHT DRY_WEIGHT MEMBRANE_INJURY_BEFORE MEMBRANE_INJURY BOLL_WEIGHT SEEDS_PER_BOLL LOCKULES SEED_INDEX SEED_VOLUME; 
+RUN;
+ods graphics on;
+title 'Cotton Traits Scatterplot Matrix';
+proc corr data=jas nomiss plots=matrix(histogram);
+var LEAF_AREA LEAF_POSITION SPAD FRESH_WEIGHT TURGID_WEIGHT DRY_WEIGHT MEMBRANE_INJURY_BEFORE MEMBRANE_INJURY BOLL_WEIGHT SEEDS_PER_BOLL LOCKULES SEED_INDEX SEED_VOLUME; 
+ run;
+ods graphics off;
+%MACRO anova; 
+proc sort data=jas 
+out=CAT; 
+by CATEGORY; 
+run;
+ods html file=&outfile; 
+title &titleanova;
+proc anova data=CAT; 
+class CATEGORY; 
+model &prop=CATEGORY; 
+means CATEGORY/tukey; 
+run;
+%MEND anova;
+
+%LET prop=LEAF_AREA; 
+%LET outfile='C:\Users\Jaskaran Dhiman\Desktop\LEAF_AREA.htm';
+%LET titleanova='LEAF_AREA'; 
+%anova
+
+%LET prop=LEAF_POSITION; 
+%LET outfile='C:\Users\Jaskaran Dhiman\Desktop\LEAF_POSITION.htm';
+%LET titleanova='LEAF_POSITION'; 
+%anova
+
+%LET prop=SPAD; 
+%LET outfile='C:\Users\Jaskaran Dhiman\Desktop\SPAD.htm';
+%LET titleanova='SPAD'; 
+%anova
+
+%LET prop=FRESH_WEIGHT; 
+%LET outfile='C:\Users\Jaskaran Dhiman\Desktop\FRESH_WEIGHT.htm';
+%LET titleanova='FRESH_WEIGHT'; 
+%anova
+
+%LET prop=TURGID_WEIGHT; 
+%LET outfile='C:\Users\Jaskaran Dhiman\Desktop\TURGID_WEIGHT.htm';
+%LET titleanova='TURGID_WEIGHT'; 
+%anova
+
+%LET prop=DRY_WEIGHT; 
+%LET outfile='C:\Users\Jaskaran Dhiman\Desktop\DRY_WEIGHT.htm';
+%LET titleanova='DRY_WEIGHT'; 
+%anova
+
+%LET prop=MEMBRANE_INJURY_BEFORE; 
+%LET outfile='C:\Users\Jaskaran Dhiman\Desktop\MEMBRANE_INJURY_BEFORE.htm';
+%LET titleanova='MEMBRANE_INJURY_BEFORE'; 
+%anova
+
+%LET prop=MEMBRANE_INJURY; 
+%LET outfile='C:\Users\Jaskaran Dhiman\Desktop\MEMBRANE_INJURY.htm';
+%LET titleanova='MEMBRANE_INJURY'; 
+%anova
+
+%LET prop=BOLL_WEIGHT; 
+%LET outfile='C:\Users\Jaskaran Dhiman\Desktop\BOLL_WEIGHT.htm';
+%LET titleanova='BOLL_WEIGHT'; 
+%anova
+
+%LET prop=SEEDS_PER_BOLL; 
+%LET outfile='C:\Users\Jaskaran Dhiman\Desktop\SEEDS_PER_BOLL.htm';
+%LET titleanova='SEEDS_PER_BOLL'; 
+%anova
+
+%LET prop=LOCKULES; 
+%LET outfile='C:\Users\Jaskaran Dhiman\Desktop\LOCKULES.htm';
+%LET titleanova='LOCKULES'; 
+%anova
+
+%LET prop=SEED_INDEX; 
+%LET outfile='C:\Users\Jaskaran Dhiman\Desktop\SEED_INDEX.htm';
+%LET titleanova='SEED_INDEX'; 
+%anova
+
+%LET prop=SEED_VOLUME; 
+%LET outfile='C:\Users\Jaskaran Dhiman\Desktop\SEED_VOLUME.htm';
+%LET titleanova='SEED_VOLUME'; 
+%anova
+
+
